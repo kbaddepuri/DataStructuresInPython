@@ -2,77 +2,56 @@
 # appointments in a given set of appointments
 
 # Structure to represent an interval
-class Node:
-    def __init__(self):
-        self.i = None
-        self.max = None
+class IntervalNode:
+    def __init__(self, low, high):
+        self.interval = (low, high)
+        self.max = high
         self.left = None
         self.right = None
 
-def newNode(j):
-    temp = Node()
-    temp.i = j
-    temp.max = j[1]
-    return temp
 
-def insert(node, i):
-    root = node
-    if root == None:
-        return newNode(i)
-
-    if i[0] < node.i[0]:
-        root.left = insert(node.left, i)
+def insert(root, low, high):
+    if not root:
+        return IntervalNode(low, high)
+    if low < root.interval[0]:
+        root.left = insert(root.left, low, high)
     else:
-        root.right = insert(node.right, i)
+        root.right = insert(root.right, low, high)
 
-    if root.max < i[1]:
-        root.max = i[1]
-
+    root.max = max(root.max, high)
     return root
 
 def doOverlap(i1, i2):
-    if i1[0] < i2[1] and i1[1] > i2[0]:
-        return True
+    return i1[0] <= i2[1] and i2[0] <= i1[1]
 
-    return False
+def overlapSearch(node, query, result=None):
+    if result is None:
+        result = []
 
-def overlapSearch(node, i):
-    if node == None:
-        return None
+    if node is None:
+        return result
+    if doOverlap(node.interval, query):
+        result.append(node.interval)
 
-    if(doOverlap(node.i, i)):
-        return node.i
+    if node.left and node.left.max >= query[0]:
+        overlapSearch(node.left, query, result)
 
-    if node.left != None and node.left.max >= i[0]:
-        return overlapSearch(node.left, i)
-
-    return overlapSearch(node.right, i)
-
-
-def printConflicting(appt, n):
-    root = None
-    root = insert(root, appt[0])
-
-    for i in range(1, n):
-        res = overlapSearch(root, appt[i])
-
-        if res != None:
-            print(f"[ {appt[i][0]}, {appt[i][1]} ] conflicts with [ {res[0]}, {res[1]} ]")
-
-        root = insert(root, appt[i])
-
+    overlapSearch(node.right, query, result)
+    return result
 
 
 # Driver code
 if __name__ == '__main__':
-    # Let us create interval tree
-    # shown in above figure
-    appt = [[1, 5], [3, 7],
-            [2, 6], [10, 15],
-            [5, 6], [4, 100]]
+    # -------------------------------
+    # Demo: Build the tree and query
+    # -------------------------------
+    intervals = [(15, 20), (10, 30), (17, 19), (5, 20), (12, 15), (30, 40)]
+    root = None
+    for low, high in intervals:
+        root = insert(root, low, high)
 
-    n = len(appt)
+    # Search for overlapping intervals
+    query_interval = (14, 16)
+    overlaps = overlapSearch(root, query_interval)
 
-    print("Following are conflicting intervals")
-
-    printConflicting(appt, n)
+    print(f"Overlapping intervals with {query_interval}: {overlaps}")

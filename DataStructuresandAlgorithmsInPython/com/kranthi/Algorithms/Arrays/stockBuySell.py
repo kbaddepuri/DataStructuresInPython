@@ -21,8 +21,28 @@ def stockAndBySell(prices):
 
         print(f"Buy on day: {buy} and sell on day: {sell}")
         profit += prices[sell] - prices[buy]
-    print(f"profit: {profit}")
+    print(f"Multiple buy and sell profit: {profit}")
 
+def maxProfilt_SecondLogic(prices):
+    n = len(prices)
+    if n < 2:
+        return
+    profit = 0
+    max_profit = 0
+    buy = prices[0]
+    for i in range(1, n):
+        if prices[i] > buy:
+            diff = prices[i] - buy
+            profit = max(profit, diff)
+
+        if prices[i] < buy or i == n-1:
+            max_profit = max(max_profit, profit)
+            # max_profit += max(max_profit, profit) # this is for multiple times buy and sell
+            profit = 0
+            buy = prices[i]
+
+    print("Buy once and sell once: ", max_profit)
 
 price = [100, 180, 260, 310, 40, 535, 695]
 stockAndBySell(price)
+maxProfilt_SecondLogic(price)
