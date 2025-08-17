@@ -47,6 +47,7 @@ class Solution(object):
                 if indegree[nb] == 0:
                     queue.append(nb)
 
+
         return order if len(order) == numCourses else []
 
 
