@@ -29,5 +29,5 @@ class Codec:
             node.left = dfs()
             node.right = dfs()
             return node
-        values = iter(values)
+        values = iter(data.split(','))
         return dfs()

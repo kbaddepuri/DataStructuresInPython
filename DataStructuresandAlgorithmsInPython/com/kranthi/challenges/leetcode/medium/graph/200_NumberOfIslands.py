@@ -9,7 +9,7 @@ def numberOfIslands(grid):
     def dfs(i ,j):
         if i >= rows or i < 0 or j >= cols or j < 0 or grid[i][j] == '0':
             return
-        grd[i][j] = '0'
+        grid[i][j] = '0'
         dfs(i + 1, j)
         dfs(i - 1, j)
         dfs(i, j + 1)

@@ -9,7 +9,7 @@ between two nodes p and q as the lowest node in T that has both p and q as desce
 
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
-        if not root or root == p or root == a:
+        if not root or root == p or root == q:
             return root
 
         left = self.lowestCommonAncestor(root.left, p, q)
