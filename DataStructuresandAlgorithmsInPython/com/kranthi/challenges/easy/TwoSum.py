@@ -35,3 +35,11 @@ class Solution:
 
 s = Solution()
 print(s.twoSum([2,7,11,15], 9))
+
+def twoSum(arr, target):
+    s = dict()
+    for i in range(len(arr)):
+        temp = target - arr[i]
+        if temp in s:
+            return [i, s[temp]]
+        s[arr[i]] = i
