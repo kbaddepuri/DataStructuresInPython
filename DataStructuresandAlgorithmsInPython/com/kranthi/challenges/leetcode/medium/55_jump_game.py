@@ -23,8 +23,10 @@ from typing import List
 
 def canJump(nums: List[int]) -> bool:
     j = 0 # remaining jumps
-    for i in range(len(nums) - 2): # last element can be avoided as it can reach itself
+    for i in range(len(nums) - 1): # last element can be avoided as it can reach itself
         j = max(j - 1, nums[i])
         if j == 0:
             return False
     return True
+
+print(canJump([3,2,1,0,4]))
