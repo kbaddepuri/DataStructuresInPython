@@ -97,20 +97,17 @@ def hourglassSum(array):
                     hourly_sum = s1 + s2 + s3
                 elif hourly_sum < (s1 + s2 + s3):
                     hourly_sum = s1 + s2 + s3
-    print(hourly_sum)
     return hourly_sum
 
 
 if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    arr = [
+        [-9, -9, -9, 1, 1, 1],
+        [0, -9, 0, 4, 3, 2],
+        [-9, -9, -9, 1, 2, 3],
+        [0, 0, 8, 6, 6, 0],
+        [0, 0, 0, -2, 0, 0],
+        [0, 0, 1, 2, 4, 0]
+    ]
 
-    arr = []
-
-    for _ in range(6):
-        arr.append(list(map(int, input().rstrip().split())))
-
-    result = hourglassSum(arr)
-
-    fptr.write(str(result) + '\n')
-
-    fptr.close()
+    print("highest hourglass value is {0}".format( hourglassSum(arr)))

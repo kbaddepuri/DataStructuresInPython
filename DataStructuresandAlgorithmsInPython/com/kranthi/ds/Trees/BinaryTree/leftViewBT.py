@@ -18,12 +18,36 @@ output: 1,2, 4, 8
 """
 
 class Node:
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+class LeftView:
+    def __init__(self):
+        self.root = None
+        self.max_level = 0
+
+    def leftView(self, root, level, result):
+        if root is None:
+            return result
+
+        if self.max_level < level:
+            self.max_level = level
+            result.append(root.value)
+
+        self.leftView(root.left, level + 1, result)
+        self.leftView(root.right, level + 1, result)
+
+        return result
+
+class Node:
     def __init__(self, val):
         self.value = val
         self.left = None
         self.right = None
 
-class LeftView:
+class LeftView1:
     def __init__(self):
         self.root = None
         self.max_level = 0
@@ -45,6 +69,6 @@ node.right = Node(20)
 node.right.right = Node(40)
 lv = LeftView()
 
-lv.left_view(node, 1)
+print(lv.leftView(node, 1, []))
 
             
